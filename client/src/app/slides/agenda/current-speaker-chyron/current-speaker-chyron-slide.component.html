@@ -1,0 +1,13 @@
+<div
+    id="chyron"
+    *ngIf="data"
+    [ngStyle]="{
+        'background-color': data.data.background_color,
+        color: data.data.font_color
+    }"
+>
+    <span id="inner">
+        <div id="inner-name">{{ data.data.current_speaker_name }}</div>
+        <div id="inner-level">{{ data.data.current_speaker_level }}</div>
+    </span>
+</div>

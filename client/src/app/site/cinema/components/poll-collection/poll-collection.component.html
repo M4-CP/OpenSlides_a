@@ -1,0 +1,38 @@
+<ng-container
+    *ngFor="let poll of polls; trackBy: identifyPoll"
+    [ngTemplateOutlet]="pollArea"
+    [ngTemplateOutletContext]="{ poll: poll, last: false }"
+></ng-container>
+
+<ng-container
+    *ngIf="lastPublishedPoll && !hasProjectedModelOpenPolls"
+    [ngTemplateOutlet]="pollArea"
+    [ngTemplateOutletContext]="{ poll: lastPublishedPoll, last: true }"
+></ng-container>
+
+<ng-template #pollArea let-poll="poll" let-last="last">
+    <mat-card class="os-card">
+        <p>
+            <a [routerLink]="getPollDetailLink(poll)" [state]="{ back: 'true' }" class="subtitle-text">
+                {{ getPollVoteTitle(poll) }}
+            </a>
+            <br>
+            <i *ngIf="canManagePoll(poll) && poll.isFinished" class="small">{{ 'finished (unpublished)' | translate }}</i>
+        </p>
+
+        <os-poll-progress *ngIf="poll.canBeVotedFor()" [poll]="poll"></os-poll-progress>
+
+        <div *ngIf="poll.pollClassType === 'motion'">
+            <os-motion-poll-vote [poll]="poll" *ngIf="poll.canBeVotedFor() && !last"></os-motion-poll-vote>
+            <os-motion-poll-detail-content [poll]="lastPublishedPoll" *ngIf="last"></os-motion-poll-detail-content>
+        </div>
+
+        <div *ngIf="poll.pollClassType === 'assignment'">
+            <os-assignment-poll-vote [poll]="poll" *ngIf="poll.canBeVotedFor() && !last"></os-assignment-poll-vote>
+            <os-assignment-poll-detail-content
+                [poll]="lastPublishedPoll"
+                *ngIf="last"
+            ></os-assignment-poll-detail-content>
+        </div>
+    </mat-card>
+</ng-template>

@@ -1,0 +1,8 @@
+<div class="poll-progress-wrapper" *ngIf="canSeeProgressBar">
+    <div class="vote-number">
+        <span>{{ votescast }} / {{ max }}</span>
+    </div>
+
+    <span>{{ 'Received votes' | translate }}</span>
+    <mat-progress-bar class="voting-progress-bar" [value]="valueInPercent"></mat-progress-bar>
+</div>

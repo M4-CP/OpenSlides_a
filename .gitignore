@@ -1,0 +1,86 @@
+## General
+*.pyc
+*.swp
+*.swo
+*.log
+*~
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/*
+*.code-workspace
+# System Files
+.DS_Store
+Thumbs.db
+# Virtual Environment
+.virtualenv*
+.venv
+
+## Compatibility
+# OS4-Submodules and aux-directories
+/openslides-*/
+/docker/keys/
+/docker/secrets/auth_*_key
+/docs/
+# OS3+-Submodules
+/autoupdate/
+# Plugin development
+openslides_*
+# Old OS3 stuff
+/tests/
+
+## Server
+# Local user data (settings, database, media, search index, static files)
+personal_data/*
+server/personal_data/*
+server/openslides/static/*
+# Unit test and coverage reports
+.coverage
+server/tests/file/*
+server/tests/db.sqlite3.test
+.pytest_cache
+# Package building
+*.egg-info
+# Mypy cache for typechecking
+.mypy_cache
+
+## OpenSlides 3 Client
+# Javascript tools and libraries
+**/node_modules/*
+**/bower_components/*
+# compiled output
+client/dist
+client/static
+client/tmp
+client/out-tsc
+# docs
+client/documentation
+Compodoc
+Compodocmodules
+# build artifacts
+client/.sass-cache
+client/connect.lock
+client/coverage
+client/libpeerconnection.log
+client/npm-debug.log
+client/yarn-error.log
+client/testem.log
+client/typings
+client/yarn.lock
+package-lock.json
+client/package-lock.json
+cypress.json
+
+## Deployment
+# Docker build artifacts
+docker/docker-compose.yml
+docker/docker-stack.yml
+*-version.txt
+*.pem
+# secrets
+docker/secrets/*.env

@@ -1,0 +1,2 @@
+class OpenSlidesError(Exception):
+    pass

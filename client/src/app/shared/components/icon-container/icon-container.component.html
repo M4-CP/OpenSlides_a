@@ -1,0 +1,19 @@
+<mat-icon
+    *ngIf="!swap && showIcon"
+    [matTooltip]="iconTooltip"
+    [class]="iconAction ? 'pointer' : ''"
+    (click)="iconClick()"
+    [color]="color"
+    >{{ icon }}</mat-icon
+>
+<span class="content-node" [ngClass]="noWrap ? 'single-line' : 'break-lines'">
+    <ng-content></ng-content>
+</span>
+<mat-icon
+    *ngIf="swap && showIcon"
+    [matTooltip]="iconTooltip"
+    [class]="iconAction ? 'pointer' : ''"
+    (click)="iconClick()"
+    [color]="color"
+    >{{ icon }}</mat-icon
+>

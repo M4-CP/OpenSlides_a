@@ -1,0 +1,36 @@
+<mat-card class="os-card">
+    <div>
+        <ng-container *ngIf="!isEditing">
+            <div *ngIf="legalNotice" class="legal-notice-text" [innerHtml]="legalNotice | trust: 'html'"></div>
+            <div *ngIf="!legalNotice">
+                {{ 'The event manager has not set up a legal notice yet.' | translate }}
+            </div>
+        </ng-container>
+        <ng-container *ngIf="isEditing">
+            <div>
+                <form [formGroup]="formGroup">
+                    <editor formControlName="legalNotice" [init]="tinyMceSettings"></editor>
+                </form>
+            </div>
+        </ng-container>
+        <mat-divider></mat-divider>
+        <div *ngIf="versionInfo" class="version-text">
+            <a [attr.href]="versionInfo.openslides_url" target="_blank">
+                OpenSlides {{ versionInfo.openslides_version }}
+            </a>
+            <span>({{ 'License' | translate }}: {{ versionInfo.openslides_license }})</span>
+
+            <div *ngIf="versionInfo.plugins.length">
+                <p>
+                    <span>{{ 'Installed plugins' | translate }}:</span>
+                </p>
+                <div *ngFor="let plugin of versionInfo.plugins">
+                    <a [attr.href]="plugin.url" target="_blank"> {{ plugin.verbose_name }} {{ plugin.version }} </a>
+                    <div *ngIf="plugin.license">
+                        <span>({{ 'License' | translate }}: {{ plugin.license }})</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-card>

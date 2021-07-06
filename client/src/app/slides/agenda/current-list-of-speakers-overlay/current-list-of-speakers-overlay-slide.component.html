@@ -1,0 +1,17 @@
+<div id="overlay" *ngIf="currentSpeaker || nextSpeakers.length > 0">
+    <h3>{{ 'List of speakers' | translate }}</h3>
+
+    <div *ngIf="currentSpeaker" class="currentSpeaker one-line">
+        <mat-icon>mic</mat-icon>
+        <span>{{ currentSpeaker.user }}</span>
+    </div>
+
+    <ol class="nextSpeakers">
+        <li *ngFor="let speaker of nextSpeakers" class="one-line">
+            {{ speaker.user }}
+            <mat-icon *ngIf="speaker.marked">star</mat-icon>
+            <mat-icon *ngIf="speaker.pro_speech===true">thumb_up</mat-icon>
+            <mat-icon *ngIf="speaker.pro_speech===false">thumb_down</mat-icon>
+        </li>
+    </ol>
+</div>

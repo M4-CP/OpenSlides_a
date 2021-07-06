@@ -1,0 +1,52 @@
+@import '~@angular/material/theming';
+
+/** Custom component theme. Only lives in a specific scope */
+@mixin os-site-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, accent);
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+    $is-dark-theme: map-get($theme, is-dark);
+
+    os-site {
+        /* main background color */
+        .main-container {
+            background-color: mat-color($background, background);
+        }
+        .nav-toolbar {
+            background-color: mat-color($background, card); //TODO
+        }
+
+        .nav-toggle-button {
+            background: mat-color($background, background);
+            color: mat-color($foreground, icon);
+        }
+
+        /* seperator */
+        mat-nav-list.main-nav,
+        mat-divider {
+            border-top-color: $os-outline;
+        }
+
+        /** style and align the nav icons the icons*/
+        .main-nav {
+            mat-icon {
+                color: mat-color($foreground, icon);
+            }
+            span {
+                color: mat-color($foreground, text);
+            }
+        }
+
+        /** style the active link */
+        .active {
+            mat-icon {
+                color: mat-color(if($is-dark-theme, $accent, $primary));
+            }
+            span {
+                color: mat-color(if($is-dark-theme, $accent, $primary));
+            }
+        }
+    }
+}

@@ -1,0 +1,110 @@
+<os-poll-form
+    [pollClassType]="pollClassType.Assignment"
+    [data]="pollData"
+    [pollService]="assignmentPollService"
+    [pollMethods]="AssignmentPollMethodVerbose"
+    [percentBases]="AssignmentPollPercentBaseVerbose"
+    #pollForm
+></os-poll-form>
+
+<!-- Analog voting -->
+<ng-container *ngIf="isAnalogPoll && dialogVoteForm">
+    <form [formGroup]="dialogVoteForm">
+        <!-- Candidates Values -->
+        <div formGroupName="options">
+            <div *ngFor="let option of options" class="votes-grid">
+                <div class="candidate">
+                    <span *ngIf="option.user">{{ option.user.getFullName() }}</span>
+                    <i *ngIf="!option.user">{{ unknownUserLabel | translate }}</i>
+                </div>
+
+                <div class="amount">
+                    <div *ngFor="let value of analogPollValues" [formGroupName]="option.user_id">
+                        <os-check-input
+                            [placeholder]="voteValueVerbose[value] | translate"
+                            [checkboxValue]="-1"
+                            inputType="number"
+                            [checkboxLabel]="'majority' | translate"
+                            [formControlName]="value"
+                        ></os-check-input>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Global Values -->
+        <div class="votes-grid">
+            <os-check-input
+                class="amount"
+                *ngIf="globalYesEnabled"
+                placeholder="{{ PollPropertyVerbose.global_yes | translate }}"
+                [checkboxValue]="-1"
+                inputType="number"
+                [checkboxLabel]="'majority' | translate"
+                formControlName="amount_global_yes"
+            ></os-check-input>
+        </div>
+
+        <div class="votes-grid">
+            <os-check-input
+                class="amount"
+                *ngIf="globalNoEnabled"
+                placeholder="{{ PollPropertyVerbose.global_no | translate }}"
+                [checkboxValue]="-1"
+                inputType="number"
+                [checkboxLabel]="'majority' | translate"
+                formControlName="amount_global_no"
+            ></os-check-input>
+        </div>
+
+        <div class="votes-grid">
+            <os-check-input
+                class="amount"
+                *ngIf="globalAbstainEnabled"
+                placeholder="{{ PollPropertyVerbose.global_abstain | translate }}"
+                [checkboxValue]="-1"
+                inputType="number"
+                [checkboxLabel]="'majority' | translate"
+                formControlName="amount_global_abstain"
+            ></os-check-input>
+        </div>
+
+        <!-- Sum Values -->
+        <div *ngFor="let value of sumValues" class="votes-grid">
+            <os-check-input
+                class="amount"
+                [placeholder]="generalValueVerbose[value] | translate"
+                [checkboxValue]="-1"
+                inputType="number"
+                [checkboxLabel]="'majority' | translate"
+                [formControlName]="value"
+            ></os-check-input>
+        </div>
+    </form>
+
+    <!-- Publish Check -->
+    <div class="spacer-top-20">
+        <mat-checkbox [(ngModel)]="publishImmediately" (change)="publishStateChanged($event.checked)">
+            <span>{{ 'Publish immediately' | translate }}</span>
+        </mat-checkbox>
+        <mat-error *ngIf="!dialogVoteForm.valid"> {{ 'Error in form field.' | translate }}</mat-error>
+    </div>
+</ng-container>
+
+<!-- Actions -->
+<div mat-dialog-actions>
+    <!-- Save Button -->
+    <button
+        mat-button
+        (click)="submitPoll()"
+        *ngIf="pollForm && dialogVoteForm && pollForm.contentForm"
+        [disabled]="pollForm.contentForm.invalid || dialogVoteForm.invalid"
+    >
+        <span>{{ 'Save' | translate }}</span>
+    </button>
+
+    <!-- Cancel Button -->
+    <button mat-button [mat-dialog-close]="false">
+        <span>{{ 'Cancel' | translate }}</span>
+    </button>
+</div>

@@ -1,0 +1,26 @@
+.user-statistics-table {
+    width: 100%;
+    margin: 16px auto;
+
+    &,
+    td,
+    th {
+        border-collapse: collapse;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+    }
+    td,
+    th {
+        padding: 8px 8px 8px 24px;
+        text-align: left;
+    }
+}
+
+.user-statistics-table--virtual-scroll {
+    display: block;
+    height: 500px;
+
+    .list-view-frame {
+        height: 100%;
+    }
+}

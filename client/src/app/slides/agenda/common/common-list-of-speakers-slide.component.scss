@@ -1,0 +1,28 @@
+.lastSpeakers {
+    color: #9a9898;
+    margin: 20px 0 10px 33px;
+}
+
+.currentSpeaker {
+    font-weight: bold;
+    margin: 20px 0 16px;
+
+    .micicon {
+        vertical-align: middle;
+    }
+}
+
+.nextSpeakers {
+    margin: 0;
+    padding-left: 6px;
+    margin-top: 20px !important;
+
+    li {
+        list-style-position: inside;
+        line-height: 150%;
+    }
+}
+
+.mat-icon {
+    vertical-align: text-top;
+}

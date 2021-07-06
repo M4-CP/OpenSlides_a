@@ -1,0 +1,123 @@
+<os-banner></os-banner>
+<mat-sidenav-container
+    #siteContainer
+    class="main-container"
+    (backdropClick)="toggleSideNav()"
+    (touchstart)="swipe($event, 'start')"
+    (touchend)="swipe($event, 'end')"
+>
+    <mat-sidenav
+        #sideNav
+        [mode]="vp.isMobile ? 'over' : 'side'"
+        [opened]="!vp.isMobile"
+        disableClose="!vp.isMobile"
+        class="side-panel"
+    >
+        <div class="nav-toolbar">
+            <!-- logo -->
+            <a routerLink="/" (click)="mobileAutoCloseNav()">
+                <os-logo class="os-logo-container" [footer]="false"></os-logo>
+            </a>
+        </div>
+
+        <!-- User Menu -->
+        <os-user-menu (navEvent)="mobileAutoCloseNav()"></os-user-menu>
+
+        <!-- navigation -->
+        <mat-nav-list class="main-nav">
+            <span *ngFor="let entry of mainMenuEntries">
+                <a
+                    [@navItemAnim]
+                    *osPerms="entry.permission"
+                    mat-list-item
+                    (click)="mobileAutoCloseNav()"
+                    [routerLink]="entry.route"
+                    routerLinkActive="active"
+                    [routerLinkActiveOptions]="{ exact: entry.route === '/' }"
+                >
+                    <mat-icon>{{ entry.icon }}</mat-icon>
+                    <span>{{ entry.displayName | translate }}</span>
+                </a>
+            </span>
+            <mat-divider></mat-divider>
+            <a
+                [@navItemAnim]
+                *ngIf="canSeeChat"
+                mat-list-item
+                (click)="mobileAutoCloseNav()"
+                routerLink="/chat"
+                routerLinkActive="active"
+            >
+                <mat-icon
+                    [matBadgeHidden]="chatNotificationAmount === 0"
+                    [matBadge]="chatNotificationAmount"
+                    matBadgeColor="accent"
+                    matBadgeOverlap="false"
+                    >chat</mat-icon
+                >
+                <span>
+                    {{ 'Chat' | translate }}
+                </span>
+            </a>
+            <a
+                [@navItemAnim]
+                mat-list-item
+                routerLink="/legalnotice"
+                routerLinkActive="active"
+                (click)="mobileAutoCloseNav()"
+            >
+                <mat-icon>info</mat-icon>
+                <span>{{ 'Legal notice' | translate }}</span>
+            </a>
+            <a
+                [@navItemAnim]
+                mat-list-item
+                routerLink="/privacypolicy"
+                routerLinkActive="active"
+                (click)="mobileAutoCloseNav()"
+            >
+                <mat-icon>security</mat-icon>
+                <span>{{ 'Privacy policy' | translate }}</span>
+            </a>
+            <a
+                [@navItemAnim]
+                mat-list-item
+                href="https://openslides.com"
+                target="_blank"
+                (click)="mobileAutoCloseNav()"
+            >
+                <span>
+                    <small><os-copyright-sign></os-copyright-sign>&nbsp;Copyright by OpenSlides</small>
+                </span>
+            </a>
+            <div class="os-footer-logo-container">
+                <os-logo [footer]="true"></os-logo>
+            </div>
+        </mat-nav-list>
+        <!-- Toggle-button -->
+        <div class="nav-toggle-button-container" *ngIf="!vp.isMobile">
+            <button *ngIf="sideNav.opened" mat-raised-button (click)="toggleSideNav()" class="nav-toggle-button left">
+                <mat-icon>arrow_back_ios</mat-icon>
+            </button>
+        </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <!-- Toggle-button -->
+        <div class="nav-toggle-button-container" *ngIf="!vp.isMobile">
+            <button *ngIf="!sideNav.opened" mat-raised-button (click)="toggleSideNav()" class="nav-toggle-button right">
+                <mat-icon>arrow_forward_ios</mat-icon>
+            </button>
+        </div>
+        <div (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')" class="content">
+            <main>
+                <router-outlet #o="outlet"></router-outlet>
+            </main>
+        </div>
+        <div class="toolbars">
+            <os-action-bar></os-action-bar>
+            <os-interaction-container></os-interaction-container>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>
+
+<os-global-spinner></os-global-spinner>
